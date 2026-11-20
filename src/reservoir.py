@@ -2,11 +2,11 @@ import numpy as np
 
 PHI = (1 + np.sqrt(5)) / 2
 
-def generate_fibonacci_time(n_steps, t0=1.0):
-    n = np.arange(n_steps)
-    fib_n = np.round((PHI**n - (-PHI)**-n) / np.sqrt(5)).astype(float)
-    t_linear = np.mod(fib_n, n_steps)
-    return t_linear + np.mod(t_linear * PHI, 1.0)
+def generate_fibonacci_time(n_steps):
+    n = np.arange(1, n_steps + 1)
+    fib_n = (PHI**n - (-PHI)**-n) / np.sqrt(5)
+    t_fib = np.log(fib_n + 1e-9) 
+    return t_fib + np.mod(t_fib * PHI, 1.0)
 
 def mirror_operator(S, C=0.0):
     return C - np.flip(S)
@@ -18,7 +18,7 @@ def limit_cycle_map(z, t_fib, beta=PHI):
     return (z / (np.abs(z) + 1e-9)) * np.exp(1j * beta * t_fib)
 
 def parity_project(S, C=0.0):
-    return C - S
+    return np.real(C - S)
 
 def reservoir_step(psi, t_fib, lambda_val=1.0, C=0.0):
     dt = 0.01
