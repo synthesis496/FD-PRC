@@ -13,7 +13,7 @@ This framework is the convergence of 4 foundational pillars, designed to process
 ## 🏛️ The Four Pillars
 
 1. **Fibonacci Time (\(T_{Fib}\)):** Time is not linear. Data is injected using quasi-periodic Fibonacci sequences (\(1, 1, 2, 3, 5...\)) to induce non-linear interference and maximize entropy.
-2. **Mirror Operator (\(M\)):** Data dimensions are folded and compressed using symmetry reflections (\(M S(x) = C - S(-x)\)), retaining the core identity while drastically reducing the state space.
+2. **Mirror Operator (\(M\)):** Data dimensions are folded and compressed using symmetry reflections, retaining the core identity while drastically reducing the state space.
 3. **Dissipative Dynamics:** Utilizing natural quantum decay (Lindblad evolution) to act as a "fading memory." Old data is structurally forgotten, preventing state explosion.
 4. **Limit Cycle Attractor:** The system is governed by an evolution map (\(T(z) = e^{(a + i\beta)z}\)). Instead of collapsing to zero or exploding to infinity, the system enters a stable, bounded orbit where net energy flow is zero (\(\Delta Q = 0\)).
 
