@@ -8,13 +8,13 @@ from src.readout import train_readout, predict
 
 def run_benchmark(n_steps=500, dim=20):
     t_fib = generate_fibonacci_time(n_steps)
-    inputs = np.sin(t_fib)
+    inputs = np.sin(np.arange(n_steps) * 0.1)
     psi = np.random.rand(dim) + 1j * np.random.rand(dim)
     
     states = []
     targets = []
     
-    for i in range(len(t_fib) - 1):
+    for i in range(n_steps - 1):
         psi, _ = reservoir_step(psi, t_fib[i])
         states.append(psi)
         targets.append(inputs[i + 1])
