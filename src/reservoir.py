@@ -4,8 +4,8 @@ PHI = (1 + np.sqrt(5)) / 2
 
 def generate_fibonacci_time(n_steps):
     n = np.arange(1, n_steps + 1)
-    fib_n = (PHI**n - (-PHI)**-n) / np.sqrt(5)
-    t_fib = np.log(fib_n + 1e-9) 
+    t_fib = np.mod(n * PHI, 1.0) 
+   
     return t_fib + np.mod(t_fib * PHI, 1.0)
 
 def mirror_operator(S, C=0.0):
