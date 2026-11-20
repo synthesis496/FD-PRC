@@ -5,7 +5,6 @@ PHI = (1 + np.sqrt(5)) / 2
 def generate_fibonacci_time(n_steps):
     n = np.arange(1, n_steps + 1)
     t_fib = np.mod(n * PHI, 1.0) 
-   
     return t_fib + np.mod(t_fib * PHI, 1.0)
 
 def mirror_operator(S, C=0.0):
@@ -18,7 +17,7 @@ def limit_cycle_map(z, t_fib, beta=PHI):
     return (z / (np.abs(z) + 1e-9)) * np.exp(1j * beta * t_fib)
 
 def parity_project(S, C=0.0):
-    return np.real(C - S)
+    return C - S
 
 def reservoir_step(psi, t_fib, lambda_val=1.0, C=0.0):
     dt = 0.01
