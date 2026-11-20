@@ -15,17 +15,17 @@ def fold_operator(t):
     return np.mod(t * PHI, 1.0)
 
 def limit_cycle_map(z, t_fib, beta=PHI):
-    return np.tanh(z) * np.exp(1j * beta * t_fib)
+    return (z / (np.abs(z) + 1e-9)) * np.exp(1j * beta * t_fib)
 
-def parity_project(S):
-    return -S
+def parity_project(S, C=0.0):
+    return C - S
 
-def reservoir_step(psi, t_fib, lambda_val=1.0):
+def reservoir_step(psi, t_fib, lambda_val=1.0, C=0.0):
     dt = 0.01
     t_self_similar = t_fib * (1.0 + fold_operator(t_fib))
-    M_op = mirror_operator(psi)
+    M_op = mirror_operator(psi, C)
     d_psi = -1j * dt * (t_self_similar * M_op * psi)
     psi_bound = limit_cycle_map(psi + d_psi, t_fib)
-    psi_next = parity_project(psi_bound)
-    structural_absence = np.sum(psi_next + mirror_operator(psi_next) + lambda_val * psi_next)
+    psi_next = parity_project(psi_bound, C)
+    structural_absence = np.sum(psi_next + mirror_operator(psi_next, C) - C)
     return psi_next, structural_absence
