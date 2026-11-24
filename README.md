@@ -1,4 +1,5 @@
 # FD-PRC — Fibonacci-Dissipative Physical Reservoir Computing
+no-if else
 
 A small NumPy implementation of a **Fibonacci-modulated reservoir**, optional state-healing layer, and linear readouts. The repository includes six scripts for generating prediction, noise, recovery, ablation, trajectory, and readout-comparison plots.
 
