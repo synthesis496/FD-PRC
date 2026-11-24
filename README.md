@@ -44,13 +44,5 @@ FD-PRC is not just an AI model; it is a foundational physics theorem that bridge
 *   **AI:** A next-generation Physical Reservoir Computing model.
 *   **Security (Topo-Auth):** The exact same mathematics (Fibonacci + Mirror) power the `Topo-Auth` structural security protocol.
 
-## 🚀 Roadmap & Status
-This repository currently hosts the **Theoretical Manifesto and Mathematical Blueprint**. 
-- [x] Core Postulate & Architecture Design
-- [ ] Python Simulation Engine (`src/`)
-- [ ] Benchmarking against LSTM and Transformers
-- [ ] Photonic/QuDit Hardware Mapping
-
 ## 📄 License
 This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. 
-You are free to use, modify, and distribute this framework, provided that any derivative work or network service remains fully open-source under the same license.
