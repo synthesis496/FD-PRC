@@ -91,31 +91,31 @@ This runs `fig1_accuracy.py` through `fig6_readout_compare.py` and writes six PN
 | `fig5_trajectory.py` | Complex-plane trajectory of the first state component |
 | `fig6_readout_compare.py` | Ridge, one-pass Hebbian, and random zero-shot readout RMSE comparison |
 
-### Figure previews
+### Experimental figures
 
 **1. One-step prediction** — the script plots the held-out target and model prediction.
 
-![Schematic preview of the one-step prediction plot](docs/figures/fig1_accuracy.svg)
+![Experimental plot of the one-step prediction plot](docs/figures/fig1_accuracy.svg)
 
 **2. Noise sweep** — the script compares mean test error and standard deviation across seeds.
 
-![Schematic preview of the noise-sweep plot](docs/figures/fig2_noise_sweep.svg)
+![Experimental plot of the noise-sweep plot](docs/figures/fig2_noise_sweep.svg)
 
 **3. Perturbation recovery** — the script compares absolute prediction errors and marks the perturbation timestep.
 
-![Schematic preview of the perturbation-recovery plot](docs/figures/fig3_recovery.svg)
+![Experimental plot of the perturbation-recovery plot](docs/figures/fig3_recovery.svg)
 
 **4. Component ablation** — the script compares test RMSE for the full reservoir and ablated variants.
 
-![Schematic preview of the ablation plot](docs/figures/fig4_ablation.svg)
+![Experimental plot of the ablation plot](docs/figures/fig4_ablation.svg)
 
 **5. State trajectory** — the script plots the real and imaginary parts of the first complex state component.
 
-![Schematic preview of the complex-plane trajectory plot](docs/figures/fig5_trajectory.svg)
+![Experimental plot of the complex-plane trajectory plot](docs/figures/fig5_trajectory.svg)
 
 **6. Readout comparison** — the script compares test RMSE for the three implemented readout approaches.
 
-![Schematic preview of the readout-comparison plot](docs/figures/fig6_readout_compare.svg)
+![Experimental plot of the readout-comparison plot](docs/figures/fig6_readout_compare.svg)
 
 Run the tests with:
 
