@@ -129,4 +129,4 @@ pytest
 
 ## License
 
-See [`LICENSE`](LICENSE) for the repository license. Note that `pyproject.toml` currently declares a different license identifier from the checked-in license file; resolve that metadata mismatch before redistributing the package.
+See [`LICENSE`](LICENSE) for the repository license.
