@@ -1,7 +1,8 @@
 import numpy as np
 
-FIB_CACHE = np.array(
-    [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584],
+PHI = (1.0 + np.sqrt(5.0)) / 2.0
+
+FIB_CACHE = np.array(,
     dtype=np.int64,
 )
 
@@ -15,42 +16,34 @@ IDENTITY_HEAL = IdentityHeal()
 
 
 class FDReservoir:
-    def __init__(self, n_qudits=8, d=4, gamma=0.15, a=-0.05, beta=0.4, mu=0.0, seed=42):
+    def __init__(self, n_qudits=8, d=4, gamma=0.35, a=-0.05, beta=PHI, mu=0.0, seed=42):
         self.n = n_qudits
         self.d = d
+        self.dim = n_qudits * d
         self.gamma = gamma
         self.a = a
         self.beta = beta
         self.mu = mu
+
         rng = np.random.default_rng(seed)
-        psi = rng.standard_normal(n_qudits * d) + 1j * rng.standard_normal(n_qudits * d)
-        self.psi = psi / np.linalg.norm(psi)
+        self.w_in = (rng.standard_normal(self.dim) + 1j * rng.standard_normal(self.dim)) * 0.5
 
-    def _fib_pair(self, t_idx):
-        i = int(np.minimum(t_idx + 1, len(FIB_CACHE) - 1))
-        j = int(np.maximum(i - 1, 0))
-        return FIB_CACHE[i], FIB_CACHE[j]
+        psi = rng.standard_normal(self.dim) + 1j * rng.standard_normal(self.dim)
+        self.psi = psi / (np.linalg.norm(psi) + 1e-12)
 
-    def inject(self, u, t_idx):
-        f_cur, f_prev = self._fib_pair(t_idx)
-        amp = 0.15 * np.log1p(f_cur)
-        phase = 2 * np.pi * (f_cur / f_prev)
-        rng = np.random.default_rng(int(t_idx))
-        pattern = rng.standard_normal(self.psi.shape)
-        self.psi = self.psi + amp * u * pattern * np.exp(1j * phase)
-        self.psi = self.psi / (np.linalg.norm(self.psi) + 1e-12)
+    def _fib_time(self, t_idx):
+        n = float(t_idx + 1)
+        t_fib = (n * PHI) % 1.0
+        t_fold = (t_fib * PHI) % 1.0
+        return t_fib * (1.0 + t_fold)
 
-    def mirror(self):
-        self.psi = 2 * self.mu - np.conj(self.psi)
-        self.psi = self.psi / (np.linalg.norm(self.psi) + 1e-12)
+    def _mirror_op(self, s):
+        return self.mu - np.flip(s)
 
-    def dissipate(self, dt=1.0):
-        self.psi = self.psi * np.exp(-self.gamma * dt)
-        self.psi = self.psi / (np.linalg.norm(self.psi) + 1e-12)
-
-    def limit_cycle(self, dt=1.0):
-        self.psi = np.exp(self.a * dt + 1j * self.beta * self.psi * dt)
-        self.psi = self.psi / (np.linalg.norm(self.psi) + 1e-12)
+    def _limit_cycle_map(self, z, t_self_similar):
+        mag = np.tanh(np.abs(z))
+        phase = np.angle(z) + self.beta * t_self_similar
+        return mag * np.exp(1j * phase)
 
     def observables(self):
         amp = np.abs(self.psi)
@@ -58,25 +51,34 @@ class FDReservoir:
         power = amp ** 2
         return np.concatenate([amp, phase, power])
 
-    def step(self, u, t_idx, dt=1.0, heal=IDENTITY_HEAL):
-        self.inject(u, t_idx)
-        self.limit_cycle(dt)
-        self.mirror()
-        self.dissipate(dt)
+    def step(self, u, t_idx, dt=0.1, heal=IDENTITY_HEAL):
+        t_sim = self._fib_time(t_idx)
+        drive = u * self.w_in * np.exp(1j * 2.0 * np.pi * t_sim)
+
+        m_op = self._mirror_op(self.psi)
+        d_psi = -1j * dt * (t_sim * m_op * self.psi) + drive
+
+        psi_bound = self._limit_cycle_map(self.psi + d_psi, t_sim)
+        psi_cand = self.mu - psi_bound
+
+        leak = np.exp(-self.gamma * dt)
+        self.psi = (1.0 - leak) * self.psi + leak * psi_cand
+
+        self.psi = self.psi / (np.linalg.norm(self.psi) + 1e-12)
         self.psi = heal.apply(self.psi, t_idx)
         return self.observables()
 
 
 class FDNoFib(FDReservoir):
-    def inject(self, u, t_idx):
-        super().inject(u, 0)
+    def _fib_time(self, t_idx):
+        return 0.5
 
 
 class FDNoMirror(FDReservoir):
-    def mirror(self):
-        return None
+    def _mirror_op(self, s):
+        return np.zeros_like(s)
 
 
 class FDNoLimitCycle(FDReservoir):
-    def limit_cycle(self, dt=1.0):
-        return None
+    def _limit_cycle_map(self, z, t_self_similar):
+        return z
