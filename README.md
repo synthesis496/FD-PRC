@@ -74,7 +74,7 @@ print('test RMSE:', rmse(signal[n_train + 1:], prediction))
 
 ## Experiments and figures
 
-The SVGs below are **explanatory previews, not measured experimental output**. To reproduce the actual plots defined in the figure scripts, run:
+The figures below are experimental outputs generated directly by the simulation scripts. To reproduce these plots,run:
 
 ```bash
 python scripts/run_all.py
