@@ -2,9 +2,17 @@ import numpy as np
 
 PHI = (1.0 + np.sqrt(5.0)) / 2.0
 
-FIB_CACHE = np.array(,
-    dtype=np.int64,
-)
+
+def _build_fibonacci_cache():
+    """Build positive Fibonacci values that fit safely in int64."""
+    values = [1, 1]
+    int64_max = np.iinfo(np.int64).max
+    while values[-1] + values[-2] <= int64_max:
+        values.append(values[-1] + values[-2])
+    return np.asarray(values, dtype=np.int64)
+
+
+FIB_CACHE = _build_fibonacci_cache()
 
 
 class IdentityHeal:
