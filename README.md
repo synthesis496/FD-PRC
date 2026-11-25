@@ -1,5 +1,9 @@
 # Fibonacci-Dissipative Physical Reservoir Computing (FD-PRC)
 
+**Chutiphong bunloed,Independent Researcher Quantum Computing & Theoretical Physics**  
+📍 Buriram, Thailand | ✉️ [synthesis496@gmail.com](mailto:synthesis496@gmail.com)  
+🔗 [ORCID: 0009-0003-4295-7521](https://orcid.org/0009-0003-4295-7521)
+
 > **FD-PRC** is a next-generation Physical Reservoir Computing architecture that replaces energy-intensive deep learning weight updates (Backpropagation) with fundamental mathematical and physical laws. By combining **Fibonacci Fractal Time Injection**, **Dissipative Quantum/Photonic Dynamics**, **Mirror Symmetry Folding**, and **Thermodynamic Limit Cycle Stabilization**, FD-PRC transforms natural physical substrates into high-capacity computational engines.
 
 ---
