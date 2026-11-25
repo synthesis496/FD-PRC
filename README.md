@@ -162,3 +162,6 @@ FD-PRC serves as an integration bridge combining modular physical computing subs
 
 ## Project Specification
 * **Architecture**: Fibonacci-Dissipative Physical Reservoir Computing (FD-PRC)
+
+## Citation
+Chutiphong. (2026). synthesis496/FD-PRC: V.2 main (Version v1.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24522923
